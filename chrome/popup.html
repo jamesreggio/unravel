@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="lib/popup.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0.8em;
+        color: #e1e5e8;
+        background: #022845;
+        font-family: Roboto, sans-serif;
+        font-size: 13px;
+        line-height: 1.2;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1 {
+        margin: 0;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+      h2 {
+        margin: 0;
+        font-size: 1.0em;
+        font-weight: normal;
+        color: #a7a7a7;
+      }
+      a {
+        text-decoration: none;
+        color: #6dbdee;
+      }
+      textarea {
+        margin: 1.0em 0 0;
+        padding: 0.5em;
+        height: 20em;
+        width: 60em;
+        font-family: monospace;
+      }
+      .toggle {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="initial">Loading...</h1>
+    <div class="toggle success">
+      <h1>Success</h1>
+      <h2>Copy your plaintext crash from the textbox below.</h2>
+    </div>
+    <div class="toggle error">
+      <h1>Error</h1>
+      <h2>
+        <span>Please file an issue on this GitHub repository:</span>
+        <a href="https://github.com/jamesreggio/unravel/issues/new" target="_blank">
+          jamesreggio/unravel
+        </a>
+      </h2>
+    </div>
+    <textarea id="payload" class="toggle success error" wrap="off" spellcheck="false">
+    </textarea>
+  </body>
+</html>

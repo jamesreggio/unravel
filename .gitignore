@@ -1,0 +1,9 @@
+# Build
+/lib
+/chrome.zip
+
+# Dependencies
+/node_modules
+
+# Tools
+npm-debug.log
