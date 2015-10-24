@@ -1,7 +1,7 @@
-# ![Icon](/chrome/img/icon-24.png) Unravel
+# ![Icon](/chrome/img/icon-38.png) Unravel
 
 [Chrome extension](https://chrome.google.com/webstore/detail/unravel/opccdmdchkjidmnneegkgglhgigpkopa)
-to extract a plaintext crash from Twitter Fabric (formerly known as
+that extracts a plaintext crash from Twitter Fabric (formerly known as
 Crashlytics).
 
 ## How to use
@@ -10,7 +10,8 @@ Crashlytics).
    [Chrome Web Store](https://chrome.google.com/webstore/detail/unravel/opccdmdchkjidmnneegkgglhgigpkopa).
 2. Navigate to a specific crash within Crashlytics on
    [Twitter Fabric](https://fabric.io).  
-   _You may have to click *View full details...* to reach a specific crash instance._
+   _You may have to click **More details...* next to **Viewing latest crash**
+   to reach a specific crash instance._
 3. Click the blue Crashlytics logo in your address bar.
 4. Copy the plaintext crash to your clipboard.
 
@@ -21,7 +22,7 @@ take care of it.
 
 ## How to develop locally
 
-Ensure the local `node_modules/.bin` is in your path, then run:
+Ensure `./node_modules/.bin` is in your path, then run:
 
 ```sh
 npm install
@@ -40,5 +41,5 @@ Bump the version in `package.json` and `manifest.json`, then run:
 npm run prepublish
 ```
 
-Upload the `chrome.zip` file to the
+Upload `chrome.zip` to the
 [Chrome Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard).

@@ -2,7 +2,7 @@
   "name": "unravel",
   "version": "0.0.1",
   "private": true,
-  "description": "Chrome extension to extract a plaintext crash from Twitter Fabric (Crashlytics)",
+  "description": "Chrome extension that extracts a plaintext crash from Twitter Fabric (Crashlytics)",
   "license": "MIT",
   "author": {
     "name": "James Reggio",
