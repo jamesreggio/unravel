@@ -1,6 +1,6 @@
 {
   "name": "unravel",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "description": "Chrome extension to extract a plaintext crash from Twitter Fabric (Crashlytics)",
   "license": "MIT",
@@ -16,7 +16,7 @@
   "homepage": "https://github.com/jamesreggio/unravel",
   "bugs": "https://github.com/jamesreggio/unravel/issues",
   "scripts": {
-    "prepublish": "make build && zip -r chrome.zip chrome -x \\*/.\\*"
+    "prepublish": "make build && cd chrome && zip -r ../chrome.zip . -x \\*/.\\*"
   },
   "devDependencies": {
     "babelify": "^5.0.3",
