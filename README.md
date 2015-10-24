@@ -1,4 +1,4 @@
-# ![Icon](/chrome/img/icon-38.png) Unravel
+# ![Icon](/chrome/img/icon-24.png) Unravel
 
 [Chrome extension](https://chrome.google.com/webstore/detail/unravel/opccdmdchkjidmnneegkgglhgigpkopa)
 that extracts a plaintext crash from Twitter Fabric (formerly known as
