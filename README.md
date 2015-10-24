@@ -10,7 +10,7 @@ Crashlytics).
    [Chrome Web Store](https://chrome.google.com/webstore/detail/unravel/opccdmdchkjidmnneegkgglhgigpkopa).
 2. Navigate to a specific crash within Crashlytics on
    [Twitter Fabric](https://fabric.io).  
-   _You may have to click **More details...* next to **Viewing latest crash**
+   _You may have to click **More details...** next to **Viewing latest crash**
    to reach a specific crash instance._
 3. Click the blue Crashlytics logo in your address bar.
 4. Copy the plaintext crash to your clipboard.
