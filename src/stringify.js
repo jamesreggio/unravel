@@ -9,11 +9,18 @@ const stringify = module.exports = {
       return [
         stringify.app(obj['host_app']),
         `${stringify.os(obj.os)} on ${stringify.device(obj.device)}`,
+      ].join('\n');
+    }
+
+    function details() {
+      return [
+        `Session: ${obj['session_id']}`,
         `Storage: ${[
           `disk ${stringify.storage(obj.storage)}`,
           `memory ${stringify.storage(obj.memory)}`,
         ].join(' and ')}`,
         `Orientation: ${stringify.orientation(obj.orientation)}`,
+        `Timestamp: ${obj['created_at']}`,
       ].join('\n');
     }
 
@@ -26,6 +33,7 @@ const stringify = module.exports = {
 
     return [
       header(),
+      details(),
       stringify.stacktrace(obj.stacktraces),
       footer(),
     ].join('\n\n');
