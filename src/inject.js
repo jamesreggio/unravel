@@ -41,12 +41,7 @@ function receiveMessage(e) {
   window.unravel.requesting = false;
   switch (e.data.type) {
     case 'unravel:success':
-      // Inject app name from URL.
-      const session = e.data.payload['crash_session'];
-      const parsed = window.location.href.match(/\/apps\/([^/]+)\//);
-      session['host_app'].name = parsed[1] || 'Unknown app';
-      // Send stringified result.
-      sendResult('success', stringify.session(session));
+      sendResult('success', stringify.session(e.data.payload));
       break;
     case 'unravel:error':
       throw new Error(
@@ -87,30 +82,65 @@ function requestSession() {
     );
   }
 
-  // Build the resource URL.
-  const resourceUrl = [API_PREFIX, parsed.resourcePath].join('');
+  // Build the resource URLs.
+  const resourceUrls = Object.keys(parsed.resourcePaths)
+    .reduce((urls, key) => {
+      urls[key] = [API_PREFIX, parsed.resourcePaths[key]].join('');
+      return urls;
+    }, {
+      config: 'https://fabric.io/api/v2/client_boot/config_data',
+    });
 
   // Inject a `script` element to fetch the resource and `postMessage` back.
   // Yes, this is janky as hell.
   function fetch() {
-    window.$.get('%resourceUrl%')
+    const resourceUrls = '%resourceUrls%';
+    const configUrl = resourceUrls.config;
+    delete resourceUrls.config;
+
+    function fail(xhr, status, error) {
+      window.postMessage({
+        type: 'unravel:error',
+        payload: {status, error},
+      }, '*');
+    }
+
+    window.$.get(configUrl)
       .done((data) => {
-        window.postMessage({
-          type: 'unravel:success',
-          payload: data,
-        }, '*');
+        const app = data.current_application || {};
+        const keys = Object.keys(resourceUrls);
+        const urls = keys.map((key) => {
+          return resourceUrls[key].replace(
+            `/${app.bundle_identifier.toLowerCase()}/`,
+            `/${app.id}/`
+          );
+        });
+
+        window.$.when.apply(
+          window.$,
+          urls.map((url) => window.$.get(url))
+        ).done((...arr) => {
+          const payload = keys.reduce((obj, key, i) => {
+            const data = arr[i];
+            if (data) {
+              obj[key] = data[0];
+            }
+            return obj;
+          }, {app});
+          window.postMessage({
+            type: 'unravel:success',
+            payload,
+          }, '*');
+        })
+        .fail(fail);
       })
-      .fail((xhr, status, error) => {
-        window.postMessage({
-          type: 'unravel:error',
-          payload: {status, error},
-        }, '*');
-      });
+      .fail(fail);
   }
 
   const scriptText =
     `(${fetch.toString()})()`
-    .replace('%resourceUrl%', resourceUrl);
+    .replace('"%resourceUrls%"', JSON.stringify(resourceUrls));
+
   const scriptEl = document.createElement('script');
   scriptEl.innerHTML = scriptText;
   document.body.appendChild(scriptEl);

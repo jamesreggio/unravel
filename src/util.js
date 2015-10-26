@@ -1,11 +1,15 @@
 /*
  * Return an object indicating whether the host and path are valid for this
- * browser extension, and if so, the resource path from the URL.
+ * browser extension, and if so, the resource paths from the URL.
  */
 function parseUrl(url) {
   const REQUIRED_PREFIX = 'https://fabric.io/';
-  const REQUIRED_PARAMS = [['apps', 'projects'], 'issues', 'sessions'];
+  const RESOURCE_PARAMS = {
+    issue: [['apps', 'projects'], 'issues'],
+    session: [['apps', 'projects'], 'issues', 'sessions'],
+  };
 
+  // Validate the scheme and host.
   if (url.indexOf(REQUIRED_PREFIX) !== 0) {
     return {
       validHost: false,
@@ -14,25 +18,40 @@ function parseUrl(url) {
     };
   }
 
+  // Generate the resource paths.
   const parts = url.split('/');
-  const path = REQUIRED_PARAMS.reduce((path, param) => {
+  const paths = Object.keys(RESOURCE_PARAMS).reduce((paths, resource) => {
+    if (paths === null) {
+      return paths;
+    }
+
+    const path = RESOURCE_PARAMS[resource].reduce((path, param) => {
+      if (path === null) {
+        return path;
+      }
+
+      const [find, use] = Array.isArray(param) ? param : [param, param];
+      const i = parts.indexOf(find);
+      if (i === -1 || i === parts.length) {
+        return null;
+      }
+
+      return `${path}/${use}/${parts[i + 1]}`;
+    }, '');
+
     if (path === null) {
-      return path;
+      paths = null;
+    } else {
+      paths[resource] = path;
     }
 
-    const [find, use] = Array.isArray(param) ? param : [param, param];
-    const i = parts.indexOf(find);
-    if (i === -1 || i === parts.length) {
-      return null;
-    }
-
-    return `${path}/${use}/${parts[i + 1]}`;
-  }, '');
+    return paths;
+  }, {});
 
   return {
     validHost: true,
-    validPath: !!path,
-    resourcePath: path,
+    validPath: !!paths,
+    resourcePaths: paths,
   };
 }
 
