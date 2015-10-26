@@ -41,10 +41,12 @@ function receiveMessage(e) {
   window.unravel.requesting = false;
   switch (e.data.type) {
     case 'unravel:success':
-      sendResult(
-        'success',
-        stringify.session(e.data.payload['crash_session'])
-      );
+      // Inject app name from URL.
+      const session = e.data.payload['crash_session'];
+      const parsed = window.location.href.match(/\/apps\/([^/]+)\//);
+      session['host_app'].name = parsed[1] || 'Unknown app';
+      // Send stringified result.
+      sendResult('success', stringify.session(session));
       break;
     case 'unravel:error':
       throw new Error(
@@ -61,7 +63,7 @@ function receiveMessage(e) {
  * Inject code into the Twitter Fabric page to request a crash session and
  * message the results back via `postMessage`.
  */
-function requestSession(url) {
+function requestSession() {
   const API_PREFIX = 'https://fabric.io/api/v3';
 
   // Check for a request in progress.
@@ -77,6 +79,7 @@ function requestSession(url) {
   }
 
   // Parse and confirm that the URL is valid for this browser extension.
+  const url = window.location.href;
   const parsed = util.parseUrl(url);
   if (!parsed.validHost || !parsed.validPath) {
     throw new Error(
@@ -115,4 +118,4 @@ function requestSession(url) {
 
 // Immediately attempt to request the current session.
 window.unravel = window.unravel || {};
-protect(requestSession)(window.location.href);
+protect(requestSession)();
