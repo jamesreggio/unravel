@@ -7,6 +7,7 @@ const stringify = module.exports = {
   session(obj) {
     function header() {
       return [
+        stringify.app(obj['host_app']),
         `${stringify.os(obj.os)} on ${stringify.device(obj.device)}`,
         `Storage: ${[
           `disk ${stringify.storage(obj.storage)}`,
@@ -30,6 +31,10 @@ const stringify = module.exports = {
     ].join('\n\n');
   },
 
+  app(obj) {
+    return `${obj.name} (${obj.version.build})`;
+  },
+
   os(obj) {
     return [
       (obj.name === 'ios') ? 'iOS' : obj.name,
@@ -48,30 +53,33 @@ const stringify = module.exports = {
 
   storage(obj) {
     return [
-      `${Math.ceil(obj.free / obj.used * 100)}% free`,
-      `(${Math.ceil(obj.free / (1024 * 1024))} MB)`,
+      `${Math.round(obj.free / (obj.free + obj.used) * 100)}% free`,
+      `(${Math.round(obj.free / (1024 * 1024))} MB)`,
     ].join(' ');
   },
 
   orientation(obj) {
-    return `device in ${obj.device} and UI in ${obj.ui}`;
+    if (obj.device === 'unknown' && obj.ui === 'unknown') {
+      return 'unknown';
+    }
+    return `device is ${obj.device} and UI is ${obj.ui}`;
   },
 
   stacktrace(obj) {
-    return obj.threads
+    return obj
+      .exceptions.concat(obj.errors, obj.threads)
       .map(stringify.thread)
       .join('\n\n');
   },
 
-  thread(obj) {
+  thread(obj, i) {
     function header() {
-      let str = 'Thread';
-      if (str !== obj.state) {
-        str = `${obj.state} ${str}`;
+      let str = `[Thread ${i}]`;
+      if (obj.caption.title !== 'Thread') {
+        str = `${str} ${obj.caption.title}`;
       }
-      str = `${str}: ${obj.name.thread}`;
-      if (obj.name.caption) {
-        str = `${str} (${obj.name.caption})`;
+      if (obj.caption.subtitle) {
+        str = `${str}\n${obj.caption.subtitle}`;
       }
       return str;
     }
@@ -86,7 +94,10 @@ const stringify = module.exports = {
 
   frame(obj, i) {
     return [
-      util.alignr(i, 3),
+      [
+        obj.blamed ? '>' : ' ',
+        util.alignr(i, 2),
+      ].join(''),
       util.alignl(obj.library, 30),
       util.alignl(obj.address, 10),
       obj.symbol,
