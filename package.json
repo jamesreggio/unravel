@@ -21,8 +21,8 @@
   "devDependencies": {
     "babelify": "^5.0.3",
     "browserify": "^9.0.6",
-    "javascript": "jamesreggio/javascript#0.0.1",
-    "jscs": "^2.3.5",
+    "javascript": "jamesreggio/javascript#0.0.2",
+    "jscs": "^2.4.0",
     "jshint": "^2.8.0",
     "uglifyify": "^3.0.1",
     "watchy": "^0.6.1"
