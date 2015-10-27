@@ -39,7 +39,7 @@ npm run prepublish
 
 Upload `chrome.zip` to the [Chrome Developer Dashboard](https://chrome.google.com/webstore/developer/dashboard).
 
-## How this all fits together
+## How it works
 
 The Chrome Extension development model is a bit wonky, so this was my best
 attempt to abide by the [Principle of Least Privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege)
