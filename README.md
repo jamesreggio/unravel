@@ -47,8 +47,8 @@ and minimize the number of moving parts.
 
 The extension is implemented as a [page action](https://developer.chrome.com/extensions/pageAction),
 which is designed to appear inside the address bar as a contextual aid. (The
-alternative is a [browser actions](https://developer.chrome.com/extensions/browserAction),
-which appear to the right of the address bar and is typically agnostic to the
+alternative is a [browser action](https://developer.chrome.com/extensions/browserAction),
+which appears to the right of the address bar and is typically agnostic to the
 current page.)
 
 The extension performs messaging between the following modules:
