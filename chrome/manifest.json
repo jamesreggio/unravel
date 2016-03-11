@@ -16,9 +16,10 @@
   },
   "page_action": {
     "default_icon": {
-      "19": "img/icon-disabled-19.png",
-      "38": "img/icon-disabled-38.png"
-    }
+      "19": "img/icon-19.png",
+      "38": "img/icon-38.png"
+    },
+    "default_popup": "popup.html"
   },
   "icons": {
     "16": "img/icon-16.png",
