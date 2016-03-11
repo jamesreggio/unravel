@@ -9,7 +9,7 @@ that extracts a plaintext crash from the Crashlytics tab in Twitter Fabric.
 1. Navigate to a specific crash within Crashlytics on [Twitter Fabric](https://fabric.io).  
    _Click **More details...** next to **Viewing latest crash** to reach a
    specific crash instance._
-1. Click the blue Crashlytics icon in your address bar.
+1. Click the blue Crashlytics icon in your status bar.
 1. Copy the plaintext crash to your clipboard.
 
 If you experience any issues, fret not: the Crashlytics website has probably
@@ -45,11 +45,11 @@ The Chrome Extension development model is a bit wonky, so this was my best
 attempt to abide by the [Principle of Least Privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege)
 and minimize the number of moving parts.
 
-The extension is implemented as a [page action](https://developer.chrome.com/extensions/pageAction),
-which is designed to appear inside the address bar as a contextual aid. (The
-alternative is a [browser action](https://developer.chrome.com/extensions/browserAction),
-which appears to the right of the address bar and is typically agnostic to the
-current page.)
+The extension is implemented as a [page action](https://developer.chrome.com/extensions/pageAction).
+Prior to Chrome 38, these would appear inside the address bar as a contextual
+aid for the current site. Now, page actions are largely indistinguishable from
+always-present [browser actions](https://developer.chrome.com/extensions/browserAction),
+making the choice of page action strictly a matter of legacy.
 
 The extension performs messaging between the following modules:
 
