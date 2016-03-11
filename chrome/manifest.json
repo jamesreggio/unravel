@@ -6,7 +6,7 @@
   "author": "James Reggio <james.reggio@gmail.com> (http://regg.io)",
   "homepage_url": "https://github.com/jamesreggio/unravel",
   "permissions": [
-    "https://fabric.io/",
+    "https://*.fabric.io/",
     "clipboardWrite",
     "tabs"
   ],

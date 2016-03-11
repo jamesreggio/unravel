@@ -3,14 +3,14 @@
  * browser extension, and if so, the resource paths from the URL.
  */
 function parseUrl(url) {
-  const REQUIRED_PREFIX = 'https://fabric.io/';
+  const REQUIRED_PREFIX = /https:\/\/(www\.)?fabric.io\//;
   const RESOURCE_PARAMS = {
     issue: [['apps', 'projects'], 'issues'],
     session: [['apps', 'projects'], 'issues', 'sessions'],
   };
 
   // Validate the scheme and host.
-  if (url.indexOf(REQUIRED_PREFIX) !== 0) {
+  if (!REQUIRED_PREFIX.test(url)) {
     return {
       validHost: false,
       validPath: false,

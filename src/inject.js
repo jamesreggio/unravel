@@ -59,7 +59,7 @@ function receiveMessage(e) {
  * message the results back via `postMessage`.
  */
 function requestSession() {
-  const API_PREFIX = 'https://fabric.io/api/v3';
+  const API_PREFIX = '/api/v3';
 
   // Check for a request in progress.
   if (window.unravel.requesting) {
@@ -88,7 +88,7 @@ function requestSession() {
       urls[key] = [API_PREFIX, parsed.resourcePaths[key]].join('');
       return urls;
     }, {
-      config: 'https://fabric.io/api/v2/client_boot/config_data',
+      config: '/api/v2/client_boot/config_data',
     });
 
   // Inject a `script` element to fetch the resource and `postMessage` back.
